@@ -1,7 +1,12 @@
-<app-header [title]='title'></app-header>
-<!-- <nav>
-  <a routerLink="/dashboard">Dashboard</a>
-  <a routerLink="/heroes">Heroes</a>
-</nav>
-<router-outlet></router-outlet>
-<app-messages></app-messages> -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <app-header [title]='title'></app-header>
+      <nav>
+        <a routerLink='/expenses' class="btn btn-primary">Expenses</a>
+        <a routerLink='/register' class="btn btn-primary">Register Expense</a>
+      </nav>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
