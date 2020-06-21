@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
+import { ExpenseService } from '../expense.service';
+import { Expense } from '../expense';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-register-form',
@@ -8,13 +11,41 @@ import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from
 })
 export class RegisterFormComponent implements OnInit {
 
-  months: string[] = ["January", "February", "March", "April", "May", 'June', 'July', 'August', 'September', "October", "November", "December"];
+  constructor(
+    private formBuilder: FormBuilder,
+    private expenseService: ExpenseService,
+    private route: ActivatedRoute
+    ) { }
+
+  ngOnInit(): void {
+    this.getExpense()
+    this.form = this.formBuilder.group({
+      description: [this.expense.description || '', Validators.required],
+      reference_month: [this.expense.reference_month || '', Validators.required],
+      reference_year: [this.expense.reference_year || '', [Validators.required]],
+      due_date: [this.expense.due_date || '', [Validators.required, dateLimitValidator()]],
+      payment_date: [this.expense.payment_date || '', [Validators.required, dateLimitValidator()]],
+      amount: [this.expense.amount || '', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+    })
+  }
+
+  months: number[] = [...Array(12).keys()].map((_, idx) => 1 + idx);
   years: number[] = [...Array(2022-2000+1).keys()].map((_, idx) => 2000 + idx);
 
   form: FormGroup;
   text: string;
   
   submitted: boolean = false;
+
+  id: number;
+  expense: Expense = {id:null,description:null,due_date:null,payment_date:null,
+  reference_month:null,reference_year:null,amount:null};
+
+  getExpense(): void {
+    this.id = +this.route.snapshot.paramMap.get('id');
+    if(this.id)
+      this.expenseService.getExpense(this.id).subscribe(expense => this.expense = expense);
+  }
 
   invalidDescription(): boolean{
     return this.submitted && this.form.controls.description.errors != null;
@@ -44,21 +75,30 @@ export class RegisterFormComponent implements OnInit {
     this.submitted = true;
 
     if(this.form.valid){
-      this.text = 'Expense registered';
+      const expense: Expense = this.form.value;
+      if(this.id){
+        this.expenseService.updateExpense(this.id, expense).subscribe(
+          response => {
+            this.text = 'Expense updated'
+          },
+          error => {
+            this.text = 'Error at updating expense';
+            console.log(error);
+          }
+        )
+      }
+      else{
+        this.expenseService.addExpense(expense).subscribe(
+          response => {
+            this.text = 'Expense registered'
+          },
+          error => {
+            this.text = 'Error at registering expense';
+            console.log(error);
+          }
+        )
+      }
     }
-  }
-
-  constructor(private formBuilder: FormBuilder) { }
-
-  ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      description: ['', Validators.required],
-      reference_month: ['', Validators.required],
-      reference_year: ['', [Validators.required]],
-      due_date: ['', [Validators.required, dateLimitValidator()]],
-      payment_date: ['', [Validators.required, dateLimitValidator()]],
-      amount: ['', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
-    })
   }
 
 }

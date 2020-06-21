@@ -1,7 +1,7 @@
+<h3>{{description}} expenses</h3>
 <table>
   <thead>
     <tr>
-      <td>Description</td>
       <td>Reference Month</td>
       <td>Payment Date</td>
       <td>Due Date</td>
@@ -10,7 +10,6 @@
   </thead>
   <tbody>
     <tr *ngFor="let expense of expenses">
-      <td><a routerLink='/expenses/{{expense.description}}'>{{expense.description}}</a></td>
       <td>{{expense.reference_month.toString().padStart(2,'0')}}/{{expense.reference_year}}</td>
       <td>{{expense.payment_date | date:'dd/MM/y'}}</td>
       <td>{{expense.due_date | date:'dd/MM/y'}}</td>

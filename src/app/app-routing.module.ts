@@ -2,19 +2,15 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ExpensesComponent } from './expenses/expenses.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
-// import { HeroesComponent } from './heroes/heroes.component';
-// import { DashboardComponent }   from './dashboard/dashboard.component';
-// import { HeroDetailComponent }  from './hero-detail/hero-detail.component';
-
+import { ExpenseDetailComponent } from './expense-detail/expense-detail.component';
+import { ExpenseListComponent } from './expense-list/expense-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/expenses', pathMatch: 'full' },
   { path: 'expenses', component: ExpensesComponent },
-  { path: 'register', component: RegisterFormComponent },
-  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  // { path: 'heroes', component: HeroesComponent },
-  // { path: 'dashboard', component: DashboardComponent },
-  // { path: 'detail/:id', component: HeroDetailComponent },
+  { path: 'register/:id', component: RegisterFormComponent },
+  { path: 'expenses/:desc', component: ExpenseListComponent },
+  { path: 'detail/:id', component: ExpenseDetailComponent },
 ];
 
 @NgModule({
