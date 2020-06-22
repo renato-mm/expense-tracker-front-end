@@ -45,8 +45,8 @@ export class ExpenseService {
     return this.http.post<Expense[]>(this.expensesUrl, expense);
   }
 
-  updateExpense(id: number, expense: Expense): Observable<Expense[]>{
-    return this.http.put<Expense[]>(`${this.expensesUrl}/${id}`, expense);
+  updateExpense(id: number, expense: Expense): Observable<any>{
+    return this.http.put(`${this.expensesUrl}/${id}`, expense);
   }
 
   deleteExpense(id: number): Observable<Expense[]>{

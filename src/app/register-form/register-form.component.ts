@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from
 import { ExpenseService } from '../expense.service';
 import { Expense } from '../expense';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register-form',
@@ -14,19 +16,19 @@ export class RegisterFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private expenseService: ExpenseService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
     ) { }
 
   ngOnInit(): void {
-    this.getExpense()
-    this.form = this.formBuilder.group({
-      description: [this.expense.description || '', Validators.required],
-      reference_month: [this.expense.reference_month || '', Validators.required],
-      reference_year: [this.expense.reference_year || '', [Validators.required]],
-      due_date: [this.expense.due_date || '', [Validators.required, dateLimitValidator()]],
-      payment_date: [this.expense.payment_date || '', [Validators.required, dateLimitValidator()]],
-      amount: [this.expense.amount || '', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
-    })
+    this.subscription = this.route.params.subscribe(params => {
+      this.getExpense(+params.id);
+      this.startForm();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   months: number[] = [...Array(12).keys()].map((_, idx) => 1 + idx);
@@ -38,13 +40,28 @@ export class RegisterFormComponent implements OnInit {
   submitted: boolean = false;
 
   id: number;
-  expense: Expense = {id:null,description:null,due_date:null,payment_date:null,
-  reference_month:null,reference_year:null,amount:null};
+  expense: Expense;
 
-  getExpense(): void {
-    this.id = +this.route.snapshot.paramMap.get('id');
-    if(this.id)
+  subscription: Subscription;
+
+  getExpense(id: number): void {
+    this.id = id;
+    if(typeof this.id === "number" && this.id)
       this.expenseService.getExpense(this.id).subscribe(expense => this.expense = expense);
+    else
+      this.expense  = {id:null,description:null,due_date:null,payment_date:null,
+        reference_month:null,reference_year:null,amount:null};
+  }
+
+  startForm(): void{
+    this.form = this.formBuilder.group({
+      description: [this.expense.description || '', Validators.required],
+      reference_month: [this.expense.reference_month || '', Validators.required],
+      reference_year: [this.expense.reference_year || '', [Validators.required]],
+      due_date: [this.expense.due_date || '', [Validators.required, dateLimitValidator()]],
+      payment_date: [this.expense.payment_date || '', [Validators.required, dateLimitValidator()]],
+      amount: [this.expense.amount || '', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+    })
   }
 
   invalidDescription(): boolean{
@@ -99,6 +116,10 @@ export class RegisterFormComponent implements OnInit {
         )
       }
     }
+  }
+
+  goBack(): void{
+    this.location.back();
   }
 
 }

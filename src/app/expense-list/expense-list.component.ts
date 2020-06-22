@@ -11,14 +11,6 @@ import { Expense } from '../expense';
 })
 export class ExpenseListComponent implements OnInit {
 
-  description: string;
-  expenses: Expense[];
-
-  getExpenses(): void {
-    this.description = this.route.snapshot.paramMap.get('desc');
-    this.expenseService.getFullExpenses(this.description).subscribe(expenses => this.expenses = expenses);
-  }
-
   constructor(
     private route: ActivatedRoute,
     private expenseService: ExpenseService,
@@ -27,6 +19,18 @@ export class ExpenseListComponent implements OnInit {
 
   ngOnInit() {
     this.getExpenses()
+  }
+
+  description: string;
+  expenses: Expense[];
+
+  getExpenses(): void {
+    this.description = this.route.snapshot.paramMap.get('desc');
+    this.expenseService.getFullExpenses(this.description).subscribe(expenses => this.expenses = expenses);
+  }
+
+  goBack(): void{
+    this.location.back();
   }
 
 }

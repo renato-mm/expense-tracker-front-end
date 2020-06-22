@@ -18,7 +18,7 @@ export class ExpenseDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getExpense()
+    this.getExpense();
   }
 
   id: number;
@@ -27,6 +27,15 @@ export class ExpenseDetailComponent implements OnInit {
   getExpense(): void {
     this.id = +this.route.snapshot.paramMap.get('id');
     this.expenseService.getExpense(this.id).subscribe(expense => this.expense = expense);
+  }
+
+  deleteExpense(): void{
+    if(confirm("Confirm deletion of expense?"))
+      this.expenseService.deleteExpense(this.expense.id).subscribe();
+  }
+
+  goBack(): void{
+    this.location.back();
   }
 
 }
