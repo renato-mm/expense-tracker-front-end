@@ -26,7 +26,14 @@ export class ExpenseListComponent implements OnInit {
 
   getExpenses(): void {
     this.description = this.route.snapshot.paramMap.get('desc');
-    this.expenseService.getFullExpenses(this.description).subscribe(expenses => this.expenses = expenses);
+    this.expenseService.getExpensesByDescription(this.description).subscribe(
+      expenses => this.expenses = expenses.sort((a, b) => {
+        if(a.reference_year === b.reference_year)
+          return a.reference_month - b.reference_month;
+        else
+          return a.reference_year - b.reference_year;
+      })
+    );
   }
 
   goBack(): void{

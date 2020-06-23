@@ -23,7 +23,7 @@ export class RegisterFormComponent implements OnInit {
   ngOnInit(): void {
     this.subscription = this.route.params.subscribe(params => {
       this.getExpense(+params.id);
-      this.startForm();
+      this.submitted = false;
     });
   }
 
@@ -37,7 +37,7 @@ export class RegisterFormComponent implements OnInit {
   form: FormGroup;
   text: string;
   
-  submitted: boolean = false;
+  submitted: boolean;
 
   id: number;
   expense: Expense;
@@ -46,11 +46,19 @@ export class RegisterFormComponent implements OnInit {
 
   getExpense(id: number): void {
     this.id = id;
-    if(typeof this.id === "number" && this.id)
-      this.expenseService.getExpense(this.id).subscribe(expense => this.expense = expense);
-    else
+    if(typeof this.id === "number" && this.id){
+      this.expenseService.getExpenseById(this.id).subscribe(
+        expense => {
+          this.expense = expense;
+          this.startForm();
+        }
+      );
+    }
+    else{
       this.expense  = {id:null,description:null,due_date:null,payment_date:null,
         reference_month:null,reference_year:null,amount:null};
+      this.startForm();
+    }
   }
 
   startForm(): void{

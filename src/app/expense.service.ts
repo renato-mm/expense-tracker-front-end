@@ -30,27 +30,27 @@ export class ExpenseService {
   }
 
   getExpensesByDescription(description: string): Observable<Expense[]>{
-    return this.http.get<Expense[]>(`${this.expensesUrl}?desc=${description}`);
+    return this.http.get<Expense[]>(`${this.expensesUrl}?description=${description}`);
   }
 
-  getExpenseById(id: number): Observable<Expense[]>{
-    return this.http.get<Expense[]>(`${this.expensesUrl}/${id}`);
+  getExpenseById(id: number): Observable<Expense>{
+    return this.http.get<Expense>(`${this.expensesUrl}/${id}`);
   }
 
   getExpensesByReferenceMonth(reference_month: string): Observable<Expense[]>{
     return this.http.get<Expense[]>(`${this.expensesUrl}?ref_month=${reference_month}`);
   }
 
-  addExpense(expense: Expense): Observable<Expense[]>{
-    return this.http.post<Expense[]>(this.expensesUrl, expense);
+  addExpense(expense: Expense): Observable<Expense>{
+    return this.http.post<Expense>(this.expensesUrl, expense);
   }
 
   updateExpense(id: number, expense: Expense): Observable<any>{
     return this.http.put(`${this.expensesUrl}/${id}`, expense);
   }
 
-  deleteExpense(id: number): Observable<Expense[]>{
-    return this.http.delete<Expense[]>(`${this.expensesUrl}/${id}`);
+  deleteExpense(id: number): Observable<Expense>{
+    return this.http.delete<Expense>(`${this.expensesUrl}/${id}`);
   }
 
 }

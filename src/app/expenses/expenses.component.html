@@ -2,19 +2,15 @@
   <thead>
     <tr>
       <td>Description</td>
-      <td>Reference Month</td>
-      <td>Payment Date</td>
-      <td>Due Date</td>
-      <td>Amount</td>
+      <td *ngFor="let month of months">{{month}}</td>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let expense of expenses">
-      <td><a routerLink='/expenses/{{expense.description}}'>{{expense.description}}</a></td>
-      <td>{{expense.reference_month.toString().padStart(2,'0')}}/{{expense.reference_year}}</td>
-      <td>{{expense.payment_date | date:'dd/MM/y'}}</td>
-      <td>{{expense.due_date | date:'dd/MM/y'}}</td>
-      <td><a routerLink='/detail/{{expense.id}}'>{{expense.amount | currency}}</a></td>
+    <tr *ngFor="let expenseList of expenses | keyvalue">
+      <td><a routerLink='/expenses/{{expenseList.key}}'>{{expenseList.key}}</a></td>
+      <td *ngFor="let expense of expenseList.value">
+        <a routerLink='/detail/{{expense.id}}'>{{expense.amount | currency}}</a>
+      </td>
     </tr>
   </tbody>
 </table>

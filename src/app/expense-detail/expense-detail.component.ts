@@ -26,7 +26,7 @@ export class ExpenseDetailComponent implements OnInit {
 
   getExpense(): void {
     this.id = +this.route.snapshot.paramMap.get('id');
-    this.expenseService.getExpense(this.id).subscribe(expense => this.expense = expense);
+    this.expenseService.getExpenseById(this.id).subscribe(expense => this.expense = expense);
   }
 
   deleteExpense(): void{
