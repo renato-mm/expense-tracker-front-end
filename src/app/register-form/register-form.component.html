@@ -1,47 +1,56 @@
-<p>{{text}}</p>
-<form [formGroup]='form' (ngSubmit)="onSubmit()">
-  <div class="form-row">
-    <div class="form-group col-6">
-      <label for='description' class="control-label">Description</label>
-      <input type="text" formControlName='description' class="form-control" [ngClass]="{'is-invalid': invalidDescription()}" id='description' name='description' placeholder="Description">
-      <small class="form-text invalid-feedback">Can't be blank</small>
+<div>
+  <p class="text-center">{{text}}</p>
+  <form class="register-form" [formGroup]='form' (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="form-group col-3"></div>
+      <div class="form-group col-6">
+        <label for='description' class="control-label">Description</label>
+        <input type="text" formControlName='description' class="form-control" [ngClass]="{'is-invalid': invalidDescription()}" id='description' name='description' placeholder="Description">
+        <small class="form-text invalid-feedback">Can't be blank</small>
+      </div>
+      <div class="form-group col-3"></div>
     </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-3">
-      <label for='reference-month' class="control-label">Reference Month</label>
-      <select class="form-control" formControlName='reference_month' [ngClass]="{'is-invalid': invalidReferenceMonth()}" name="reference-month" id="reference-month">
-        <option *ngFor="let month of months" [ngValue]="month">{{month}}</option>
-      </select>
-      <small class="form-text invalid-feedback">Can't be blank</small>
+    <div class="form-row">
+      <div class="form-group col-3"></div>
+      <div class="form-group col-3">
+        <label for='reference-month' class="control-label">Reference Month</label>
+        <select class="form-control" formControlName='reference_month' [ngClass]="{'is-invalid': invalidReferenceMonth()}" name="reference-month" id="reference-month">
+          <option *ngFor="let month of months" [ngValue]="month">{{month}}</option>
+        </select>
+        <small class="form-text invalid-feedback">Can't be blank</small>
+      </div>
+      <div class="form-group col-3">
+        <label for='reference-year' class="control-label">Reference Year</label>
+        <select class="form-control" formControlName='reference_year' [ngClass]="{'is-invalid': invalidReferenceYear()}" name="reference-year" id="reference-year">
+          <option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
+        </select>
+        <small class="form-text invalid-feedback">Can't be blank</small>
+      </div>
+      <div class="form-group col-3"></div>
     </div>
-    <div class="form-group col-3">
-      <label for='reference-year' class="control-label">Reference Year</label>
-      <select class="form-control" formControlName='reference_year' [ngClass]="{'is-invalid': invalidReferenceYear()}" name="reference-year" id="reference-year">
-        <option *ngFor="let year of years" [ngValue]="year">{{year}}</option>
-      </select>
-      <small class="form-text invalid-feedback">Can't be blank</small>
+    <div class="form-row">
+      <div class="form-group col-3"></div>
+      <div class="form-group col-2">
+        <label for='due-date' class="control-label">Due Date</label>
+        <input type="date" formControlName='due_date' class="form-control" [ngClass]="{'is-invalid': invalidDueDate()}" id='due-date' name='due-date' min='2000-01-01' max='2022-12-31'>
+        <small class="form-text invalid-feedback">Must be a date between 01/01/2000 and 31/12/2022</small>
+      </div>
+      <div class="form-group col-2">
+        <label for='payment-date' class="control-label">Payment Date</label>
+        <input type="date" formControlName='payment_date' class="form-control" [ngClass]="{'is-invalid': invalidPaymentDate()}" id='payment-date' name='payment-date' min='2000-01-01' max='2022-12-31'>
+        <small class="form-text invalid-feedback">Must be a date between 01/01/2000 and 31/12/2022</small>
+      </div>
+      <div class="form-group col-2">
+        <label for='amount' class="control-label">Amount</label>
+        <input type="text" formControlName='amount' class="form-control" [ngClass]="{'is-invalid': invalidAmount()}" id='amount' name='amount' min="0.00" step="0.01" placeholder="0.00">
+        <small class="form-text invalid-feedback">Must be a positive number with a maximum of two decimal digits</small>
+      </div>
+      <div class="form-group col-3"></div>
     </div>
-  </div>
-  <div class="form-row">
-    <div class="form-group col-2">
-      <label for='due-date' class="control-label">Due Date</label>
-      <input type="date" formControlName='due_date' class="form-control" [ngClass]="{'is-invalid': invalidDueDate()}" id='due-date' name='due-date' min='2000-01-01' max='2022-12-31'>
-      <small class="form-text invalid-feedback">Must be a date between 01/01/2000 and 31/12/2022</small>
+    <div class="form-group text-center register-form-buttons">
+      <button *ngIf="!registered" type="submit" class="btn btn-primary">Confirm</button>
+      <div *ngIf="registered" class="btn btn-primary" (click)="clearForm()">Clear</div>
+      <div class="btn btn-primary" (click)="goBack()">Back</div>
     </div>
-    <div class="form-group col-2">
-      <label for='payment-date' class="control-label">Payment Date</label>
-      <input type="date" formControlName='payment_date' class="form-control" [ngClass]="{'is-invalid': invalidPaymentDate()}" id='payment-date' name='payment-date' min='2000-01-01' max='2022-12-31'>
-      <small class="form-text invalid-feedback">Must be a date between 01/01/2000 and 31/12/2022</small>
-    </div>
-    <div class="form-group col-2">
-      <label for='amount' class="control-label">Amount</label>
-      <input type="text" formControlName='amount' class="form-control" [ngClass]="{'is-invalid': invalidAmount()}" id='amount' name='amount' min="0.00" step="0.01" placeholder="0.00">
-      <small class="form-text invalid-feedback">Must be a positive number with a maximum of two decimal digits</small>
-    </div>
-  </div>
-  <div class="form-group">
-    <button type="submit" class="btn btn-primary">Confirm</button>
-    <a class="btn btn-primary" (click)="goBack()">Back</a>
-  </div>
-</form>
+  </form>
+</div>

@@ -1,0 +1,13 @@
+
+.expense-detail{
+  text-align: center;
+}
+
+.expense-detail-table{
+  width: 50%;
+  margin: auto;
+}
+
+.expense-detail-buttons *{
+  margin: 10px;
+}

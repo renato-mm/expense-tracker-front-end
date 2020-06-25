@@ -24,6 +24,7 @@ export class RegisterFormComponent implements OnInit {
     this.subscription = this.route.params.subscribe(params => {
       this.getExpense(+params.id);
       this.submitted = false;
+      this.registered = false;
     });
   }
 
@@ -38,6 +39,7 @@ export class RegisterFormComponent implements OnInit {
   text: string;
   
   submitted: boolean;
+  registered: boolean;
 
   id: number;
   expense: Expense;
@@ -104,7 +106,8 @@ export class RegisterFormComponent implements OnInit {
       if(this.id){
         this.expenseService.updateExpense(this.id, expense).subscribe(
           response => {
-            this.text = 'Expense updated'
+            this.text = 'Expense updated';
+            this.registered = true;
           },
           error => {
             this.text = 'Error at updating expense';
@@ -115,7 +118,8 @@ export class RegisterFormComponent implements OnInit {
       else{
         this.expenseService.addExpense(expense).subscribe(
           response => {
-            this.text = 'Expense registered'
+            this.text = 'Expense registered';
+            this.registered = true;
           },
           error => {
             this.text = 'Error at registering expense';
@@ -124,6 +128,13 @@ export class RegisterFormComponent implements OnInit {
         )
       }
     }
+  }
+
+  clearForm(): void {
+    this.getExpense(0);
+    this.submitted = false;
+    this.registered = false;
+    this.text = null;
   }
 
   goBack(): void{

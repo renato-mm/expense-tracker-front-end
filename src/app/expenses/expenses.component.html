@@ -1,14 +1,14 @@
-<table>
+<table class="table table-bordered table-striped expenses-table">
   <thead>
     <tr>
-      <td>Description</td>
-      <td *ngFor="let month of months">{{month}}</td>
+      <th scope="col">Description</th>
+      <th scope="col" *ngFor="let month of months">{{month}}</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let expenseList of expenses | keyvalue">
-      <td><a routerLink='/expenses/{{expenseList.key}}'>{{expenseList.key}}</a></td>
-      <td *ngFor="let expense of expenseList.value">
+      <th scope="row"><a routerLink='/expenses/{{expenseList.key}}'>{{expenseList.key}}</a></th>
+      <td *ngFor="let expense of expenseList.value" [style.width.%]="column_width">
         <a routerLink='/detail/{{expense.id}}'>{{expense.amount | currency}}</a>
       </td>
     </tr>

@@ -1,21 +1,25 @@
-<h3>{{description}} expenses</h3>
-<table>
-  <thead>
-    <tr>
-      <td>Reference Month</td>
-      <td>Payment Date</td>
-      <td>Due Date</td>
-      <td>Amount</td>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let expense of expenses">
-      <td>{{expense.reference_month.toString().padStart(2,'0')}}/{{expense.reference_year}}</td>
-      <td>{{expense.payment_date | date:'dd/MM/y'}}</td>
-      <td>{{expense.due_date | date:'dd/MM/y'}}</td>
-      <td><a routerLink='/detail/{{expense.id}}'>{{expense.amount | currency}}</a></td>
-    </tr>
-  </tbody>
-</table>
+<div class="expense-list">
+  <h3>{{description}} expenses</h3>
+  <table class="table table-bordered table-striped expense-list-table">
+    <thead>
+      <tr>
+        <th scope="col">Reference Month</th>
+        <th scope="col">Payment Date</th>
+        <th scope="col">Due Date</th>
+        <th scope="col">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let expense of expenses">
+        <th scope="row">{{expense.reference_month.toString().padStart(2,'0')}}/{{expense.reference_year}}</th>
+        <td>{{expense.payment_date | date:'dd/MM/y'}}</td>
+        <td>{{expense.due_date | date:'dd/MM/y'}}</td>
+        <td><a routerLink='/detail/{{expense.id}}'>{{expense.amount | currency}}</a></td>
+      </tr>
+    </tbody>
+  </table>
 
-<button class="btn btn-primary" (click)="goBack()">Back</button>
+  <div class="expense-list-buttons">
+    <button class="btn btn-primary" (click)="goBack()">Back</button>
+  </div>
+</div>

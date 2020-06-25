@@ -14,6 +14,7 @@ export class ExpensesComponent implements OnInit {
 
   expenses: { [id: string]: Expense[] } = {};
   months: string[] = [];
+  column_width: number;
 
   constructor(private expenseService: ExpenseService) { }
 
@@ -50,6 +51,7 @@ export class ExpensesComponent implements OnInit {
           this.months = [...new Set(this.months)];
           this.expenses[desc] = amount_list;
         });
+        this.column_width = 70/this.months.length;
       });
   }
 
