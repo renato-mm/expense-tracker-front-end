@@ -1,5 +1,32 @@
-# ExpenseTracker
+# Expense Tracker
 
+Project developed using Angular 9.1.8 with the intent of improving my skills.
+
+It is a simple expense tracker with CRUD for expenses.
+
+It has 5 routes:
+- ```'/expenses'```: shows a table with the registered expenses from the last 6 months, you can choose a different range of 6 months;
+- ```'/expenses/:desc'```: shows a table with the registered expenses that its description matches ```':desc'```;
+- ```'/register'```: shows a form with which you can register a new expense;
+- ```'/register/:id'```: same form as before but for updating the expense which id matches ```':id'```;
+- ```'/detail/:id'```: shows the details of the expense that its id matches ```':id'```, here you can delete or edit it (redirect to ```'/register/:id'```).
+
+It was originally developed to work with this [back-end repository](https://github.com/renato-mm/expense-tracker-back-end).
+
+Some references:
+- [Angular - Tour of Heroes ap and Tutorial](https://angular.io/tutorial);
+- [Simple Application with Angular 6 + Node.js & Express](https://levelup.gitconnected.com/simple-application-with-angular-6-node-js-express-2873304fff0f);
+- [Angular 8 CRUD Application example with Web API](https://bezkoder.com/angular-crud-app/).
+
+## Dependences
+
+It was developed with this software versions:
+```
+node: 13.14.0
+npm: 6.14.5
+angular: 9.1.11
+bootstrap: 4.5.0
+```
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.8.
 
 ## Development server
