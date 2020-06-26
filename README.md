@@ -1,6 +1,6 @@
-# Expense Tracker
+# Expense Tracker Front End
 
-Project developed using Angular 9.1.8 with the intent of improving my skills.
+Project developed using Angular with the intent of improving my skills.
 
 It is a simple expense tracker with CRUD for expenses.
 
