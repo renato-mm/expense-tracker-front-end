@@ -13,12 +13,12 @@ It has 5 routes:
 
 It was originally developed to work with this [back-end repository](https://github.com/renato-mm/expense-tracker-back-end).
 
-Some references:
+References:
 - [Angular - Tour of Heroes ap and Tutorial](https://angular.io/tutorial);
 - [Simple Application with Angular 6 + Node.js & Express](https://levelup.gitconnected.com/simple-application-with-angular-6-node-js-express-2873304fff0f);
 - [Angular 8 CRUD Application example with Web API](https://bezkoder.com/angular-crud-app/).
 
-## Dependences
+## Dependencies
 
 It was developed with this software versions:
 ```
