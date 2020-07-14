@@ -8,6 +8,7 @@ import { ExpenseListComponent } from './expense-list/expense-list.component';
 const routes: Routes = [
   { path: '', redirectTo: '/expenses', pathMatch: 'full' },
   { path: 'expenses', component: ExpensesComponent },
+  { path: 'register', component: RegisterFormComponent },
   { path: 'register/:id', component: RegisterFormComponent },
   { path: 'expenses/:desc', component: ExpenseListComponent },
   { path: 'detail/:id', component: ExpenseDetailComponent },

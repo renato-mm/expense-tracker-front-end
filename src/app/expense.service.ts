@@ -29,6 +29,10 @@ export class ExpenseService {
     return this.http.get<Expense[]>(this.expensesUrl);
   }
 
+  getExpensesByDate(top_year: number, top_month: number, bottom_year: number, bottom_month: number): Observable<Expense[]>{
+    return this.http.get<Expense[]>(`${this.expensesUrl}/date?ty=${top_year}&tm=${top_month}&by=${bottom_year}&bm=${bottom_month}`);
+  }
+
   getExpensesByDescription(description: string): Observable<Expense[]>{
     return this.http.get<Expense[]>(`${this.expensesUrl}?description=${description}`);
   }

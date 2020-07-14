@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { ExpenseService } from '../expense.service';
 import { Expense } from '../expense';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Subscription } from 'rxjs';
 
@@ -17,11 +17,13 @@ export class RegisterFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private expenseService: ExpenseService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private router: Router
     ) { }
 
   ngOnInit(): void {
     this.subscription = this.route.params.subscribe(params => {
+      console.log(+params.id)
       this.getExpense(+params.id);
       this.submitted = false;
       this.registered = false;
@@ -120,6 +122,7 @@ export class RegisterFormComponent implements OnInit {
           response => {
             this.text = 'Expense registered';
             this.registered = true;
+            this.router.navigate([`/register/${response.id}`]);
           },
           error => {
             this.text = 'Error at registering expense';
